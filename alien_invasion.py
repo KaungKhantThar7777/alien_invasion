@@ -32,15 +32,24 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_status = "right"
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_status = 'left'
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-                    self.ship.moving_status = "stop"
+                self._check_keyup_events(event)
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
                     
+    def _check_keydown_events(self, event):
+        """Respond to keypresses"""
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_status = "right"
+        if event.key == pygame.K_LEFT:
+            self.ship.moving_status = 'left'
+        if event.key == pygame.K_q:
+            sys.exit()
+    def _check_keyup_events(self, event):
+        """Respond to keyups"""
+        if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
+            self.ship.moving_status = "stop"
+
     def _update_screen(self):
         """Updates images on the screen, and flip to new screen"""
         self.screen.fill(self.settings.bg_color)
